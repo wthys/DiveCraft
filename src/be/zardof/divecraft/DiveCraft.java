@@ -13,7 +13,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
- * @author Robbe <robbeuh@zardof.be>
+ * @author Wim Thys
  *
  */
 public class DiveCraft extends JavaPlugin {
