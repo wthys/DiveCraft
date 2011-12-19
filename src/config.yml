@@ -1,0 +1,16 @@
+# item = itemID of the helmet. Must be something the player can put in the helmet slot.
+# usage = the amount of fuel this helmet requires to refill the air bar.
+helmets:
+    - item  : 86  # Pumpkin
+      usage : 1
+    - item  : 302 # Chain Helmet
+      usage : 2
+    - item  : 310 # Diamond Helmet
+      usage : 3
+    - item  : 314 # Gold Helmet
+      usage : 5
+    - item  : 306 # Iron Helmet
+      usage : 8
+    - item  : 298 # Leather Cap
+      usage : 13
+fuel: 338 # Sugar Cane
