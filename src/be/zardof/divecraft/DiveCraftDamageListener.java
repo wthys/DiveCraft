@@ -3,11 +3,12 @@ package be.zardof.divecraft;
 import java.util.Map.Entry;
 
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityListener;
 import org.bukkit.inventory.ItemStack;
 
-public class DiveCraftDamageListener extends EntityListener {
+public class DiveCraftDamageListener implements Listener {
 
 	DiveCraft dc;
 
@@ -15,7 +16,7 @@ public class DiveCraftDamageListener extends EntityListener {
 		dc = diveCraft;
 	}
 
-	@Override
+	@EventHandler
 	public void onEntityDamage(EntityDamageEvent event) {
 		if (event.isCancelled())
 			return;

@@ -1,12 +1,13 @@
 package be.zardof.divecraft;
 
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.entity.EntityListener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
-public class DiveCraftDeathListener extends EntityListener {
+public class DiveCraftDeathListener implements Listener {
 
 	DiveCraft _plugin;
 
@@ -14,7 +15,7 @@ public class DiveCraftDeathListener extends EntityListener {
 		_plugin = diveCraft;
 	}
 
-	@Override
+	@EventHandler
 	public void onEntityDeath(EntityDeathEvent event) {
 		if (event instanceof PlayerDeathEvent) {
 			PlayerDeathEvent pde = (PlayerDeathEvent) event;
