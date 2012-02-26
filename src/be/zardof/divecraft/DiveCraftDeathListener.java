@@ -20,6 +20,11 @@ public class DiveCraftDeathListener implements Listener {
 		if (event instanceof PlayerDeathEvent) {
 			PlayerDeathEvent pde = (PlayerDeathEvent) event;
 			Player p = (Player) pde.getEntity();
+			
+			if (!p.hasPermission("divecraft.diver")) {
+				// No permission to use diving equipment, take drowning damage
+				return;
+			}
 
 			int helmet = p.getInventory().getHelmet().getTypeId();
 

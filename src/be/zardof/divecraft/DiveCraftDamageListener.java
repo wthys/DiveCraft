@@ -24,6 +24,12 @@ public class DiveCraftDamageListener implements Listener {
 		if (event.getCause() == EntityDamageEvent.DamageCause.DROWNING
 				&& event.getEntity() instanceof Player) {
 			Player p = (Player) event.getEntity();
+
+			if (!p.hasPermission("divecraft.diver")) {
+				// No permission to use diving equipment, take drowning damage
+				return;
+			}
+			
 			int helmet = p.getInventory().getHelmet().getTypeId();
 			int fuel = dc.getDiveFuel();
 			

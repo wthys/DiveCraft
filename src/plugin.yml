@@ -1,4 +1,12 @@
 name: DiveCraft
 main: be.zardof.divecraft.DiveCraft
-version: 1
-autyhor: robbeuh@zardof.be
+version: 2
+author: wim.thys@zardof.be
+permissions:
+    divecraft.*:
+        description: Gives sensible defaults to DiveCraft permissions
+        children:
+            divecraft.diver: true
+    divecraft.diver:
+        description: Gives you the knowledge to use diving equipment.
+        default: true
