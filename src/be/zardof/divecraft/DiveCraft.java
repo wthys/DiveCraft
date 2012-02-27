@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -22,8 +21,7 @@ public class DiveCraft extends JavaPlugin {
 
 	Logger log = Logger.getLogger("Minecraft");
 
-	DiveCraftDamageListener _dcdl = new DiveCraftDamageListener(this);
-	DiveCraftDeathListener _dcdeath = new DiveCraftDeathListener(this);
+	DiveCraftEventListener _dcel = new DiveCraftEventListener(this);
 
 	Map<Integer, Integer> _helmets = new HashMap<Integer, Integer>();
 	private int _diveFuel;
@@ -58,8 +56,7 @@ public class DiveCraft extends JavaPlugin {
 		PluginManager pm = this.getServer().getPluginManager();
 		
 		// Register events
-		pm.registerEvents(_dcdl, this);
-		pm.registerEvents(_dcdeath, this);
+		pm.registerEvents(_dcel, this);
 		
 		
 		log.info("Enabled " + getVersionString() );

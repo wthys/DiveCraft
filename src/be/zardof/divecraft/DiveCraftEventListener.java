@@ -6,14 +6,17 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.inventory.ItemStack;
 
-public class DiveCraftDamageListener implements Listener {
+public class DiveCraftEventListener implements Listener {
 
-	DiveCraft dc;
+	DiveCraft _plugin;
 
-	public DiveCraftDamageListener(DiveCraft diveCraft) {
-		dc = diveCraft;
+	public DiveCraftEventListener(DiveCraft diveCraft) {
+		_plugin = diveCraft;
 	}
 
 	@EventHandler
@@ -31,11 +34,11 @@ public class DiveCraftDamageListener implements Listener {
 			}
 			
 			int helmet = p.getInventory().getHelmet().getTypeId();
-			int fuel = dc.getDiveFuel();
+			int fuel = _plugin.getDiveFuel();
 			
 			int usage; // amount of fuel we need for a full refill
 			try {
-				usage = dc.getHelmetUsage(helmet);
+				usage = _plugin.getHelmetUsage(helmet);
 			} catch (InvalidHelmetException e) {
 				// Invalid helmet, take drowning damage.
 				return;
@@ -72,6 +75,26 @@ public class DiveCraftDamageListener implements Listener {
 				int newAir = (p.getMaximumAir() * used) / usage;
 				p.setRemainingAir(newAir);
 				event.setCancelled(true);
+			}
+		}
+	}
+
+	@EventHandler
+	public void onEntityDeath(EntityDeathEvent event) {
+		if (event instanceof PlayerDeathEvent) {
+			PlayerDeathEvent pde = (PlayerDeathEvent) event;
+			Player p = (Player) pde.getEntity();
+			
+			if (!p.hasPermission("divecraft.diver")) {
+				// No permission to use diving equipment, take drowning damage
+				return;
+			}
+
+			int helmet = p.getInventory().getHelmet().getTypeId();
+
+			if (p.getLastDamageCause().getCause() == DamageCause.DROWNING
+					&& _plugin.isDiveHelmet(helmet)) {
+				pde.setDeathMessage(p.getName() + " forgot to bring enough diving equipment and drowned");
 			}
 		}
 	}
