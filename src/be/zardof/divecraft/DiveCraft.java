@@ -9,7 +9,6 @@ import java.util.logging.Logger;
 
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.event.Event;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -57,12 +56,13 @@ public class DiveCraft extends JavaPlugin {
 		saveConfig();
 
 		PluginManager pm = this.getServer().getPluginManager();
-		pm.registerEvent(Event.Type.ENTITY_DAMAGE, _dcdl,
-				Event.Priority.Normal, this);
-		pm.registerEvent(Event.Type.ENTITY_DEATH, _dcdeath,
-				Event.Priority.Normal, this);
-
-		log.info("Enabled " + getVersionString());
+		
+		// Register events
+		pm.registerEvents(_dcdl, this);
+		pm.registerEvents(_dcdeath, this);
+		
+		
+		log.info("Enabled " + getVersionString() );
 	}
 
 	private String getVersionString() {
