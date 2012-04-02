@@ -35,7 +35,7 @@ public class DiveCraft extends JavaPlugin {
 	public void onEnable() {
 		_config = getConfig();
 
-		for (Map<String, Object> helmet : _config.getMapList("helmets")) {
+		for (Map<?, ?> helmet : _config.getMapList("helmets")) {
 			Integer helmet_id = (Integer) helmet.get("item");
 			Integer helmet_usage = (Integer) helmet.get("usage");
 

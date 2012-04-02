@@ -32,10 +32,16 @@ public class DiveCraftEventListener implements Listener {
 				// No permission to use diving equipment, take drowning damage
 				return;
 			}
+
+			ItemStack helmet_stack = p.getInventory().getHelmet();
+			if (helmet_stack == null) {
+				// No helmet
+				return;
+			}
 			
-			int helmet = p.getInventory().getHelmet().getTypeId();
+			int helmet = helmet_stack.getTypeId();
 			int fuel = _plugin.getDiveFuel();
-			
+
 			int usage; // amount of fuel we need for a full refill
 			try {
 				usage = _plugin.getHelmetUsage(helmet);
@@ -43,11 +49,10 @@ public class DiveCraftEventListener implements Listener {
 				// Invalid helmet, take drowning damage.
 				return;
 			}
-			
+
 			// Only check if we're carrying fuel
 			if (p.getInventory().contains(fuel)) {
 				int used = 0; // fuel used
-				
 
 				for (Entry<Integer, ? extends ItemStack> entry : p
 						.getInventory().all(fuel).entrySet()) {
@@ -84,17 +89,25 @@ public class DiveCraftEventListener implements Listener {
 		if (event instanceof PlayerDeathEvent) {
 			PlayerDeathEvent pde = (PlayerDeathEvent) event;
 			Player p = (Player) pde.getEntity();
-			
+
 			if (!p.hasPermission("divecraft.diver")) {
 				// No permission to use diving equipment, take drowning damage
 				return;
 			}
 
-			int helmet = p.getInventory().getHelmet().getTypeId();
-
-			if (p.getLastDamageCause().getCause() == DamageCause.DROWNING
-					&& _plugin.isDiveHelmet(helmet)) {
-				pde.setDeathMessage(p.getName() + " forgot to bring enough diving equipment and drowned");
+			if (p.getLastDamageCause().getCause() == DamageCause.DROWNING) {
+				ItemStack helmet_stack = p.getInventory().getHelmet();
+				if (helmet_stack == null) {
+					pde.setDeathMessage(p.getName()
+							+ " forgot to bring enough diving equipment and drowned");
+					return;
+				}
+				
+				int helmet = helmet_stack.getTypeId();
+				if (_plugin.isDiveHelmet(helmet)) {
+					pde.setDeathMessage(p.getName()
+							+ " forgot to bring enough diving equipment and drowned");
+				}
 			}
 		}
 	}
