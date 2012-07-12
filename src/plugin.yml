@@ -1,12 +1,16 @@
 name: DiveCraft
 main: be.zardof.divecraft.DiveCraft
-version: 2
+version: 4
 author: wim.thys@zardof.be
 permissions:
     divecraft.*:
         description: Gives sensible defaults to DiveCraft permissions
         children:
-            divecraft.diver: true
-    divecraft.diver:
-        description: Gives you the knowledge to use diving equipment.
+            divecraft.helmets: true
+            divecraft.tanks: true
+    divecraft.helmets:
+        description: Gives you the knowledge to use diving helmets.
+        default: true
+    divecraft.tanks:
+        description: Gives you the knowledge to use diving tanks.
         default: true

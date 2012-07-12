@@ -1,19 +1,23 @@
 package be.zardof.divecraft;
 
 import java.util.Map.Entry;
+import java.util.logging.Logger;
 
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class DiveCraftEventListener implements Listener {
 
 	DiveCraft _plugin;
+	private static int CHESTSLOT = 38;
 
 	public DiveCraftEventListener(DiveCraft diveCraft) {
 		_plugin = diveCraft;
@@ -28,8 +32,8 @@ public class DiveCraftEventListener implements Listener {
 				&& event.getEntity() instanceof Player) {
 			Player p = (Player) event.getEntity();
 
-			if (!p.hasPermission("divecraft.diver")) {
-				// No permission to use diving equipment, take drowning damage
+			if (!p.hasPermission("divecraft.helmets")) {
+				// No permission to use diving helmets, take drowning damage
 				return;
 			}
 
@@ -38,7 +42,7 @@ public class DiveCraftEventListener implements Listener {
 				// No helmet
 				return;
 			}
-			
+
 			int helmet = helmet_stack.getTypeId();
 			int fuel = _plugin.getDiveFuel();
 
@@ -90,25 +94,58 @@ public class DiveCraftEventListener implements Listener {
 			PlayerDeathEvent pde = (PlayerDeathEvent) event;
 			Player p = (Player) pde.getEntity();
 
-			if (!p.hasPermission("divecraft.diver")) {
-				// No permission to use diving equipment, take drowning damage
+			if (!p.hasPermission("divecraft.helmets")) {
+				// No ability to use diving helmets, take drowning damage
 				return;
 			}
 
 			if (p.getLastDamageCause().getCause() == DamageCause.DROWNING) {
 				ItemStack helmet_stack = p.getInventory().getHelmet();
 				if (helmet_stack == null) {
-					pde.setDeathMessage(p.getName()
-							+ " forgot to bring enough diving equipment and drowned");
+					pde.setDeathMessage(p.getName() + " forgot to bring enough "
+							+ "diving equipment and drowned");
 					return;
 				}
-				
+
 				int helmet = helmet_stack.getTypeId();
 				if (_plugin.isDiveHelmet(helmet)) {
-					pde.setDeathMessage(p.getName()
-							+ " forgot to bring enough diving equipment and drowned");
+					pde.setDeathMessage(p.getName() + " forgot to bring enough "
+							+ "diving equipment and drowned");
 				}
 			}
+		}
+	}
+
+	@EventHandler
+	public void onInventoryChange(InventoryClickEvent event) {
+		if (event.getSlot() != CHESTSLOT) {
+			// we have no business here
+			return;
+		}
+
+		Player p = (Player) event.getInventory().getHolder();
+		if (!p.hasPermission("divecraft.tanks")) {
+			// No ability to use tanks, do nothing
+			p.setMaximumAir(300);
+			return;
+		}
+
+		ItemStack after = event.getCursor();
+		Material head = p.getLocation().add(0, 1, 0).getBlock().getType();
+		int lung = _plugin.getLungCapacity();
+		if (after == null || after.getType().equals(Material.AIR)
+				|| !_plugin.isTank(after.getType())) {
+			p.setMaximumAir(lung);
+		} else {
+			int tank = _plugin.getTankCapacity(after.getType());
+
+			p.setMaximumAir(lung + tank);
+		}
+
+		if (!(head.equals(Material.WATER) || head
+				.equals(Material.STATIONARY_WATER))
+				|| p.getRemainingAir() > p.getMaximumAir()) {
+			p.setRemainingAir(p.getMaximumAir());
 		}
 	}
 }

@@ -14,3 +14,15 @@ helmets:
     - item  : 298 # Leather Cap
       usage : 13
 fuel: 338 # Sugar Cane
+lung capacity: 210
+tanks:
+    - item     : 303 # Chain Chestplate
+      capacity : 120
+    - item     : 311 # Diamond Chestplate
+      capacity : 120
+    - item     : 315 # Gold Chestplate
+      capacity : 90
+    - item     : 307 # Iron Chestplate
+      capacity : 60
+    - item      : 299 # Leather Chestplate
+      capacity : 30
