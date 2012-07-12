@@ -31,10 +31,11 @@ Default behaviour
 -------------------------
 Uses sugar cane for fuel. Pumpkins are the most fuel-efficient (but the view
 stinks) and the worst helmet is a Leather Cap. These are configured in the
-configuration file. The default permission setting is to allow usage of
-DiveCraft features. The base lung capacity is 10.5 seconds and each helmet adds
-a number of seconds to this.  Leather chestplate adds 1 second, diamond and
-chain chestplates add 4 seconds.
+[configuration file](https://github.com/wthys/DiveCraft/wiki/Configuration).
+The default permission setting is to allow usage of DiveCraft features. The
+base lung capacity is 10.5 seconds and each helmet adds a number of seconds to
+this.  Leather chestplate adds 1.5 second, diamond and chain chestplates add 6
+seconds.
 
 Download
 ---------------
