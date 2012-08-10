@@ -1,7 +1,6 @@
 package be.zardof.divecraft;
 
 import java.util.Map.Entry;
-import java.util.logging.Logger;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -118,6 +117,9 @@ public class DiveCraftEventListener implements Listener {
 
 	@EventHandler
 	public void onInventoryChange(InventoryClickEvent event) {
+		if (event.isCancelled())
+			return;
+		
 		if (event.getSlot() != CHESTSLOT) {
 			// we have no business here
 			return;
