@@ -39,7 +39,7 @@ seconds.
 
 Download
 ---------------
-[DiveCraft v4](https://github.com/downloads/wthys/DiveCraft/DiveCraft.v4.jar) (Bukkit 1.2.5-R4 compatible)
+[DiveCraft v4](https://github.com/downloads/wthys/DiveCraft/DiveCraft.v4.jar) (Bukkit 1.3.1-R1.0 compatible)
 
 Possible future work
 ---------
